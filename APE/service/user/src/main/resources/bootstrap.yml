@@ -1,0 +1,116 @@
+server:
+  port: 9001
+
+logging:
+  level:
+    com.yidaoyun: debug
+    org.springframework: warn
+
+spring:
+  application:
+    name: user
+  cloud:
+    config:
+      fail-fast: true
+      name: ${spring.application.name}
+      profile: ${spring.profiles.active}
+      discovery:
+        enabled: true
+        service-id: config
+  profiles:
+    active: prod
+  devtools:
+    restart:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      maxFileSize: 5MB  #单位必须大写MB或不写(即为B)
+      maxRequestSize: 10MB
+
+feign:
+  hystrix:
+    enabled: true
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://127.0.0.1:1111/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true     #访问路径可以显示IP地址
+    ip-address: 127.0.0.1
+    non-secure-port: 9001
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+mybatis:
+  typeAliasesPackage: com.yidaoyun
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+
+mapper:
+  not-empty: true
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+wx:
+  appid: wx477332b9ea33c4fd
+  secret: c6edfc43598fbda9ab813a2243200a17
+  welcome: 嗨，来啦，欢迎您~<br>产教联盟，为您甄选优质教育活动，咱们一起加油吧！<br>你的努力，终将美好！
+  templateId:
+    notificationOfApprovalResults: 1_4vdOjFtFpilA0Wle47myotiRkvB2xm7zyiXG0hMrQ
+    eventRegistrationInfoReviewNotice: 3IB9UlPB43kXkf1bzvfuy_Xa0eLJTWA9rhB66KCA2eI
+    refundResultNotice: hwwSoW8pAFHmf3O89EExVByBU7ajMBv6FPpJE6JXVO4
+    toDoReminder: ldD9mvh__hE0yC3SMGbsLs3lWaCuoqN-GYCH_0DNOmk
+    eventIsAboutToStart: -9rLjDpDz7RiJf2g1kfRJSzeA46hkOrkaUaMjn1MXBc
+
+sms:
+  account: 8a216da85697f5420156a210e3940937
+  token: df9a34f0fe814d8a88d4a1c9068706a4
+  appid: 8a216da85697f5420156a210e44b093e
+  registerTemplateId: 521329
+  changePasswordTemplateId: 521344
+  intervals: 2
+
+weixin4j:
+  #微信开发配置
+  config:
+    # prod环境，测试和开发环境不要使用此配置，会影响线上access_token的过期
+    appid: wxcb639a0b157eb40a
+    secret: 440a260dab283d6b263704d29d563bae
+    # test、dev环境
+#    appid: wx7b33bfd80cb3714f
+#    secret: 25ac08d208f8777a3ed4f68b0ba99d76
+    #公众号原始ID
+    originalid:
+    #消息加密方式 0:明文模式(默认), 1:兼容模式, 2:安全模式(推荐)
+    encodingtype: 0
+    #消息加密密钥(43位字符组成A-Za-z0-9)
+    encodingaeskey: j22REux7lHUaCVDYWQzihz9x108QMvIlN6wb6wX8A6K
+    #网页安全授权URL
+    oauthUrl: www.sdcjlm.cn
+  payConfig:
+    #微信支付_商户ID，例如10000000001
+    mchId:
+    #微信支付_商户密钥，由商户设置32位字符
+    mchKey:
+    #证书路径(pk12格式)，例如：/opt/cert/10000000001.pk12
+    certPath:
+    #证书密钥,默认为商户ID，例如：10000000001
+    certSecret:

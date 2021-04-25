@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.ChatRecordsMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.ChatRecords" id="ChatRecordsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dialogBoxId" column="dialog_box_id" jdbcType="INTEGER"/>
+        <result property="question" column="question" jdbcType="VARCHAR"/>
+        <result property="answer" column="answer" jdbcType="VARCHAR"/>
+        <result property="commonUserId" column="common_user_id" jdbcType="INTEGER"/>
+        <result property="activityId" column="activity_id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="VARCHAR"/>
+        <result property="recordsId" column="records_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="bese_column">
+      id, dialog_box_id, question, answer, common_user_id, activity_id, type, create_time,state,recordsId
+    </sql>
+    <insert id="insertChatRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into chat_records(dialog_box_id, question, answer, common_user_id, activity_id, type, create_time,state,records_id)
+        values (#{dialogBoxId}, #{question}, #{answer}, #{commonUserId}, #{activityId}, #{type}, #{createTime}, #{state}, #{recordsId})
+    </insert>
+
+
+</mapper>

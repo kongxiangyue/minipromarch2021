@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.EnrolmentPolicyMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.EnrolmentPolicy" id="EnrolmentPolicyMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="policyTitle" column="policy_title" jdbcType="VARCHAR"/>
+        <result property="policyDetails" column="policy_details" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="delStatus" column="del_status" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        id, policy_title, policy_details, user_id, user_name, del_status, create_time
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EnrolmentPolicyMap">
+        select
+          id, policy_title, policy_details, user_id, user_name, del_status, create_time
+        from enrolment_policy
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EnrolmentPolicyMap">
+        select
+          id, policy_title, policy_details, user_id, user_name, del_status, create_time
+        from enrolment_policy
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EnrolmentPolicyMap">
+        select
+          id, policy_title, policy_details, user_id, user_name, del_status, create_time
+        from enrolment_policy
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="policyTitle != null and policyTitle != ''">
+                and policy_title = #{policyTitle}
+            </if>
+            <if test="policyDetails != null and policyDetails != ''">
+                and policy_details = #{policyDetails}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="delStatus != null">
+                and del_status = #{delStatus}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into enrolment_policy(policy_title, policy_details, user_id, user_name, del_status, create_time)
+        values (#{policyTitle}, #{policyDetails}, #{userId}, #{userName}, #{delStatus}, #{createTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update enrolment_policy
+        <set>
+            <if test="policyTitle != null and policyTitle != ''">
+                policy_title = #{policyTitle},
+            </if>
+            <if test="policyDetails != null and policyDetails != ''">
+                policy_details = #{policyDetails},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from enrolment_policy where id = #{id}
+    </delete>
+
+    <select id="selectEnrolmentPolicyList" resultMap="EnrolmentPolicyMap">
+        select
+        id, policy_title, user_id, user_name, del_status, create_time
+        from enrolment_policy
+        <where>
+            <if test="info.policyTitle != null and info.policyTitle != ''">
+                and policy_title like concat ('%', #{info.policyTitle} ,'%')
+            </if>
+            <if test="info.policyDetails != null and info.policyDetails != ''">
+                and policy_details = like concat ('%', #{info.policyDetails} ,'%')
+            </if>
+            <if test="info.userId != null">
+                and user_id = #{info.userId}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+        </where>
+        order by create_time desc
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+
+    <select id="selectEnrolmentPolicyCount" resultType="java.lang.Long">
+        select
+       count(1)
+        from enrolment_policy
+        <where>
+            <if test="info.policyTitle != null and info.policyTitle != ''">
+                and policy_title like concat ('%', #{info.policyTitle} ,'%')
+            </if>
+            <if test="info.policyDetails != null and info.policyDetails != ''">
+                and policy_details = like concat ('%', #{info.policyDetails} ,'%')
+            </if>
+            <if test="info.userId != null">
+                and user_id = #{info.userId}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+        </where>
+    </select>
+
+</mapper>

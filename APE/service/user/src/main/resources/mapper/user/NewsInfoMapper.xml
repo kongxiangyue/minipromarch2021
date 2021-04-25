@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.NewsInfoMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.NewsInfo" id="NewsInfoMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="preview" column="preview" jdbcType="VARCHAR"/>
+        <result property="noticeTitle" column="notice_title" jdbcType="VARCHAR"/>
+        <result property="relatedActivityNumber" column="related_activity_number" jdbcType="VARCHAR"/>
+        <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
+        <result property="releasePersonRole" column="release_person_role" jdbcType="VARCHAR"/>
+        <result property="releasePerson" column="release_person" jdbcType="VARCHAR"/>
+        <result property="releaseTime" column="release_time" jdbcType="TIMESTAMP"/>
+        <result property="newsDetail" column="news_detail" jdbcType="VARCHAR"/>
+        <result property="delStatus" column="del_status" jdbcType="INTEGER"/>
+        <result property="checkStatus" column="check_status" jdbcType="INTEGER"/>
+        <result property="checkTime" column="check_time" jdbcType="TIMESTAMP"/>
+        <result property="checkPersonContact" column="check_person_contact" jdbcType="VARCHAR"/>
+        <result property="checkRemark" column="check_remark" jdbcType="VARCHAR"/>
+        <result property="pageView" column="page_view" jdbcType="INTEGER"/>
+        <result property="newsLink" column="news_link" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="Base_Column">
+       id, preview, notice_title, related_activity_number, keywords, release_person_role, release_person, release_time, news_detail, del_status, check_status, check_time, check_person_contact, check_remark,page_view,news_link
+    </sql>
+    <!--查询我关注的新闻资讯列表-->
+    <select id="selectMyAttentionnewsInfoCount" resultType="java.lang.Long">
+        select count(1) from my_attention m left join news_info n on m.news_info_id = n.id
+        where m.common_user_id = #{commonUserId} and m.news_info_id is not null
+        and n.del_status != 0
+        <if test = "info.noticeTitle != null">
+            and n.notice_title like concat('%',#{info.noticeTitle},'%')
+        </if>
+        <if test = "info.keywords != null">
+            and n.keywords like concat('%',#{info.keywords},'%')
+        </if>
+
+    </select>
+    <select id="selectMyAttentionnewsInfoList" resultMap="NewsInfoMap">
+        select
+         n.id, n.preview, n.notice_title, n.related_activity_number,n.keywords, n.release_person_role, n.release_person, n.release_time, n.news_detail, n.del_status, n.check_status, n.check_time, n.check_person_contact, n.check_remark
+        from my_attention m left join news_info n on m.news_info_id = n.id
+        where m.common_user_id = #{commonUserId} and m.news_info_id is not null
+        and n.del_status != 0
+        <if test = "info.noticeTitle != null">
+            and n.notice_title like concat('%',#{info.noticeTitle},'%')
+        </if>
+        <if test = "info.keywords != null">
+            and n.keywords like concat('%',#{info.keywords},'%')
+        </if>
+        order by m.id desc
+        limit #{page.startRow},#{page.pageSize}
+
+    </select>
+
+</mapper>

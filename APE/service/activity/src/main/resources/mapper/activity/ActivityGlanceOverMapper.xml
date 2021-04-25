@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.activity.mapper.ActivityGlanceOverMapper">
+
+    <resultMap type="com.yidaoyun.activity.domain.ActivityGlanceOver" id="ActivityGlanceOverMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="activityId" column="activity_id" jdbcType="INTEGER"/>
+        <result property="commonUserId" column="common_user_id" jdbcType="INTEGER"/>
+        <result property="glanceOverTime" column="glance_over_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="bese_column">
+        id, activity_id, common_user_id, glance_over_time
+    </sql>
+    <select id="selectactivityGlanceOverTotal" resultType="com.yidaoyun.activity.bean.vo.ActivitySignUpTotalVO">
+        SELECT
+            t1.time date,count(1) total
+        FROM
+            ( SELECT DATE(a.glance_over_time ) time FROM activity_glance_over a WHERE a.activity_id = #{activityId}
+            AND a.glance_over_time between #{startTime} and #{endTime} )  t1
+        GROUP BY
+		t1.time
+    </select>
+
+
+</mapper>

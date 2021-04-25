@@ -1,0 +1,75 @@
+.settledUnit {
+  background-color: #fff;
+  min-height: 100vh;
+}
+.tabBox {
+  padding: 20upx 0;
+  box-sizing: border-box;
+  .tab {
+    width: 25%;
+    height: 92upx;
+    display: inline-block;
+    text-align: center;
+    .con-text {
+      font-size: 30upx;
+      text-align: center;
+    }
+  }
+}
+.active .con-text {
+  color: #000;
+  font-size: 30upx;
+  font-weight: bold;
+}
+.active .swiper-tab-line {
+  border-bottom: 6upx solid #5598e7;
+  width: 65%;
+  margin: 20upx auto 0;
+  border-top: 6upx solid #5598e7;
+  border-radius: 20upx;
+}
+
+.enterpriseState {
+  width: 100%;
+  padding: 30upx 84upx 47upx 43upx;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  .left {
+    width: 85%;
+    float: left;
+    img {
+      width: 88upx;
+      height: 88upx;
+      border-radius: 40upx;
+      margin-right: 20upx;
+      float: left;
+      box-shadow: 0 0 2rpx 2rpx #68656510;
+    }
+    .title {
+      float: left;
+      font-size: 26upx;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+    }
+    p {
+      font-size: 20upx;
+      font-family: PingFang SC;
+      font-weight: 500;
+      color: rgba(153, 153, 153, 1);
+    }
+  }
+  .right {
+    width: 88upx;
+    height: 88upx;
+    float: right;
+    display: flex;
+    align-items: center; /*定义body的元素垂直居中*/
+    justify-content: center; /*定义body的里的元素水平居中*/
+    img {
+      width: 30upx;
+      height: 28upx;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.activity.mapper.MyAttentionMapper">
+
+    <resultMap type="com.yidaoyun.activity.bean.dto.MyAttentionDTO" id="BaseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="activityId" column="activity_id" jdbcType="INTEGER"/>
+        <result property="enterCompanyId" column="enter_company_id" jdbcType="INTEGER"/>
+        <result property="noticeAnnouncementId" column="notice_announcement_id" jdbcType="INTEGER"/>
+        <result property="newsInfoId" column="news_info_id" jdbcType="INTEGER"/>
+        <result property="commonUserId" column="common_user_id" jdbcType="INTEGER"/>
+
+    </resultMap>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAllByParams" resultMap="BaseMap">
+        select
+        id, activity_id, enter_company_id, notice_announcement_id, news_info_id, common_user_id
+        from my_attention
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="activityId != null">
+                and activity_id = #{activityId}
+            </if>
+            <if test="enterCompanyId != null">
+                and enter_company_id = #{enterCompanyId}
+            </if>
+            <if test="noticeAnnouncementId != null">
+                and notice_announcement_id = #{noticeAnnouncementId}
+            </if>
+            <if test="newsInfoId != null">
+                and news_info_id = #{newsInfoId}
+            </if>
+            <if test="commonUserId != null">
+                and common_user_id = #{commonUserId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryCountByParams" resultType="java.lang.Long">
+        select
+        count(1)
+        from my_attention
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="activityId != null">
+                and activity_id = #{activityId}
+            </if>
+            <if test="enterCompanyId != null">
+                and enter_company_id = #{enterCompanyId}
+            </if>
+            <if test="noticeAnnouncementId != null">
+                and notice_announcement_id = #{noticeAnnouncementId}
+            </if>
+            <if test="newsInfoId != null">
+                and news_info_id = #{newsInfoId}
+            </if>
+            <if test="commonUserId != null">
+                and common_user_id = #{commonUserId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

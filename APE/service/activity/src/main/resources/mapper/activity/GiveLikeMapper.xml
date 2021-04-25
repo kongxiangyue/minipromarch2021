@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.activity.mapper.GiveLikeMapper">
+
+    <resultMap type="com.yidaoyun.activity.domain.GiveLike" id="GiveLikeMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="activityId" column="activity_id" jdbcType="INTEGER"/>
+        <result property="noticeAnnouncementId" column="notice_announcement_id" jdbcType="INTEGER"/>
+        <result property="commonUserId" column="common_user_id" jdbcType="INTEGER"/>
+        <result property="newsInfoId" column="news_info_id" jdbcType="INTEGER"/>
+
+    </resultMap>
+    <select id="queryCountByParams" resultType="java.lang.Long" parameterType="com.yidaoyun.activity.domain.GiveLike">
+        select count(1) from give_like where 1 = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="id != activityId">
+            and activity_id = #{activityId}
+        </if>
+        <if test="id != noticeAnnouncementId">
+            and notice_announcement_id = #{noticeAnnouncementId}
+        </if>
+        <if test="id != newsInfoId">
+            and news_info_id = #{newsInfoId}
+        </if>
+        <if test="id != commonUserId">
+            and common_user_id = #{commonUserId}
+        </if>
+    </select>
+
+
+</mapper>

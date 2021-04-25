@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.EnterCompanyMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.EnterCompany" id="EnterCompanyResult">
+        <result property="id"    column="id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="contactName"    column="contact_name"    />
+        <result property="tel"    column="tel"    />
+        <result property="email"    column="email"    />
+        <result property="registrationTime"    column="registration_time"    />
+        <result property="accountStatus"    column="account_status"    />
+        <result property="password"    column="password"    />
+        <result property="checkStatus"    column="check_status"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="checkRemark"    column="check_remark"    />
+        <result property="companyLogo"    column="company_logo"    />
+        <result property="companyAddr"    column="company_addr"    />
+        <result property="companyLegalPerson"    column="company_legal_person"    />
+        <result property="businessLicenseNumber"    column="business_license_number"    />
+        <result property="businessLicense"    column="business_license"    />
+        <result property="companyDetail"    column="company_detail"    />
+        <result property="companyNature"    column="company_nature"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="openid"    column="openid"    />
+        <result property="salt"    column="salt"    />
+    </resultMap>
+
+
+    <sql id="bese_column">
+        id,company_name ,e.contact_name ,tel,email,registration_time ,account_status ,check_status ,
+        check_time ,check_remark,company_logo,company_addr,company_legal_person,
+        business_license_number,business_license,company_detail,company_nature,province,city,openid,nickname,
+        head_image
+    </sql>
+
+    <sql id="bese_alias_column">
+        e.id,e.company_name companyName,e.contact_name contactName,e.tel,e.email,e.registration_time registrationTime,
+        e.account_status accountStatus,e.check_status checkStatus,e.check_time checkTime,e.check_remark checkRemark,
+        e.company_logo companyLogo,e.company_addr companyAddr,e.company_legal_person companyLegalPerson,
+        e.business_license_number businessLicenseNumber,e.business_license businessLicense,e.company_detail companyDetail,
+        e.company_nature companyNature,e.province,e.city,e.openid,e.nickname,
+        e.head_image headImage
+    </sql>
+
+    <select id="selectList4Attention" parameterType="com.yidaoyun.user.domain.EnterCompany" resultMap="EnterCompanyResult">
+        select e.*, count(*) countOrder from enter_company e left join my_attention m on e.id = m.enter_company_id
+        <where>
+            <if test="id != null"> and e.id = #{companyName}</if>
+            <if test="companyName != null  and companyName != ''"> and e.company_name like concat('%', #{companyName}, '%')</if>
+            <if test="contactName != null  and contactName != ''"> and e.contact_name like concat('%', #{contactName}, '%')</if>
+            <if test="tel != null  and contactName != ''"> and e.tel like concat('%', #{tel}, '%')</if>
+            <if test="email != null  and email != ''"> and e.email like concat('%', #{email}, '%')</if>
+            <if test="accountStatus != null"> and e.account_status = #{accountStatus}</if>
+            <if test="password != null  and password != ''"> and e.password like concat('%', #{password}, '%')</if>
+            <if test="checkStatus != null"> and e.check_status = #{checkStatus}</if>
+            <if test="checkRemark != null  and checkRemark != ''"> and e.check_remark like concat('%', #{checkRemark}, '%')</if>
+            <if test="companyLogo != null  and companyLogo != ''"> and e.company_logo like concat('%', #{companyLogo}, '%')</if>
+            <if test="companyAddr != null  and companyAddr != ''"> and e.company_addr like concat('%', #{companyAddr}, '%')</if>
+            <if test="companyLegalPerson != null  and companyLegalPerson != ''"> and e.company_legalPerson like concat('%', #{companyLegalPerson}, '%')</if>
+            <if test="businessLicenseNumber != null  and businessLicenseNumber != ''"> and e.business_license_number like concat('%', #{businessLicenseNumber}, '%')</if>
+            <if test="businessLicense != null  and businessLicense != ''"> and e.business_license like concat('%', #{businessLicense}, '%')</if>
+            <if test="companyDetail != null  and companyDetail != ''"> and e.company_detail like concat('%', #{companyDetail}, '%')</if>
+            <if test="companyNature != null  and companyNature != ''"> and e.company_nature like concat('%', #{companyNature}, '%')</if>
+            <if test="province != null  and province != ''"> and e.province like concat('%', #{province}, '%')</if>
+            <if test="city != null  and city != ''"> and e.company_addr like concat('%', #{companyAddr}, '%')</if>
+            <if test="openid != null  and openid != ''"> and e.openid like concat('%', #{openid}, '%')</if>
+            <if test="salt != null  and salt != ''"> and e.salt like concat('%', #{salt}, '%')</if>
+            <if test="companyNameOrTel != null  and companyNameOrTel != ''"> and (e.tel like concat('%', #{companyNameOrTel}, '%') or e.companyName like concat('%', #{companyNameOrTel}, '%'))</if>
+        </where>
+        group by e.id order by countOrder desc
+    </select>
+    <select id="selectList4AttentionCount" resultType="java.lang.Long">
+        select  count(1)  from (
+        select e.*, count(*) countOrder from enter_company e left join my_attention m on e.id = m.enter_company_id
+        <where>
+            <if test="id != null"> and e.id = #{companyName}</if>
+            <if test="companyName != null  and companyName != ''"> and e.company_name like concat('%', #{companyName}, '%')</if>
+            <if test="contactName != null  and contactName != ''"> and e.contact_name like concat('%', #{contactName}, '%')</if>
+            <if test="tel != null  and contactName != ''"> and e.tel like concat('%', #{tel}, '%')</if>
+            <if test="email != null  and email != ''"> and e.email like concat('%', #{email}, '%')</if>
+            <if test="accountStatus != null"> and e.account_status = #{accountStatus}</if>
+            <if test="password != null  and password != ''"> and e.password like concat('%', #{password}, '%')</if>
+            <if test="checkStatus != null"> and e.check_status = #{checkStatus}</if>
+            <if test="checkRemark != null  and checkRemark != ''"> and e.check_remark like concat('%', #{checkRemark}, '%')</if>
+            <if test="companyLogo != null  and companyLogo != ''"> and e.company_logo like concat('%', #{companyLogo}, '%')</if>
+            <if test="companyAddr != null  and companyAddr != ''"> and e.company_addr like concat('%', #{companyAddr}, '%')</if>
+            <if test="companyLegalPerson != null  and companyLegalPerson != ''"> and e.company_legalPerson like concat('%', #{companyLegalPerson}, '%')</if>
+            <if test="businessLicenseNumber != null  and businessLicenseNumber != ''"> and e.business_license_number like concat('%', #{businessLicenseNumber}, '%')</if>
+            <if test="businessLicense != null  and businessLicense != ''"> and e.business_license like concat('%', #{businessLicense}, '%')</if>
+            <if test="companyDetail != null  and companyDetail != ''"> and e.company_detail like concat('%', #{companyDetail}, '%')</if>
+            <if test="companyNature != null  and companyNature != ''"> and e.company_nature like concat('%', #{companyNature}, '%')</if>
+            <if test="province != null  and province != ''"> and e.province like concat('%', #{province}, '%')</if>
+            <if test="city != null  and city != ''"> and e.company_addr like concat('%', #{companyAddr}, '%')</if>
+            <if test="openid != null  and openid != ''"> and e.openid like concat('%', #{openid}, '%')</if>
+            <if test="salt != null  and salt != ''"> and e.salt like concat('%', #{salt}, '%')</if>
+            <if test="companyNameOrTel != null  and companyNameOrTel != ''"> and (e.tel like concat('%', #{companyNameOrTel}, '%') or e.companyName like concat('%', #{companyNameOrTel}, '%'))</if>
+        </where>
+        group by e.id order by countOrder desc
+        ) t1
+    </select>
+
+    <select id="selectEnterCompanyAttentionLevelCount" resultType="java.lang.Long">
+        select count(1) from enter_company where account_status = 1
+        <if test="enter.companyName != null" >
+            and company_name = #{enter.companyName}
+        </if>
+        <if test="enter.companyNature != null" >
+            and company_nature = #{enter.companyNature}
+        </if>
+    </select>
+    <select id="selectEnterCompanyAttentionLevelList" resultType="com.yidaoyun.user.bean.vo.EnterCompanyVo">
+        select m.concerns,<include refid="bese_alias_column"></include> from enter_company e left join (
+        select count(1) concerns,enter_company_id from my_attention where enter_company_id is not null group by enter_company_id
+        ) m  on m.enter_company_id = e.id where account_status = 1
+        <if test="enter.companyName != null" >
+            and e.company_name = #{enter.companyName}
+        </if>
+        <if test="enter.companyNature != null" >
+            and e.company_nature = #{enter.companyNature}
+        </if>
+        order by concerns desc
+        limit #{enter.startRow},#{enter.pageSize}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="add" keyProperty="id" useGeneratedKeys="true">
+        insert into cjlm.enter_company(company_name, contact_name, tel, email, registration_time, account_status, password, check_status, check_time, check_remark, company_logo, company_addr, company_legal_person, business_license_number, business_license, company_detail, company_nature, province, city, openid, salt, nickname, head_image)
+        values (#{companyName}, #{contactName}, #{tel}, #{email}, #{registrationTime}, #{accountStatus}, #{password}, #{checkStatus}, #{checkTime}, #{checkRemark}, #{companyLogo}, #{companyAddr}, #{companyLegalPerson}, #{businessLicenseNumber}, #{businessLicense}, #{companyDetail}, #{companyNature}, #{province}, #{city}, #{openid}, #{salt}, #{nickname}, #{headImage})
+    </insert>
+
+
+</mapper>

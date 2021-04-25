@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.NoticeAnnouncementMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.NoticeAnnouncement" id="NoticeAnnouncementMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="preview" column="preview" jdbcType="VARCHAR"/>
+        <result property="noticeTitle" column="notice_title" jdbcType="VARCHAR"/>
+        <result property="receiveUser" column="receive_user" jdbcType="VARCHAR"/>
+        <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
+        <result property="releasePerson" column="release_person" jdbcType="VARCHAR"/>
+        <result property="releaseTime" column="release_time" jdbcType="TIMESTAMP"/>
+        <result property="noticeDetail" column="notice_detail" jdbcType="VARCHAR"/>
+        <result property="delStatus" column="del_status" jdbcType="OTHER"/>
+    </resultMap>
+
+    <sql id="Base_Column">
+          id, preview, notice_title, receive_user, keywords, release_person, release_time, notice_detail, del_status
+    </sql>
+
+    <select id="selectMyAttentionNoticeAnnouncementCount" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM my_attention m
+            LEFT JOIN notice_announcement n ON m.notice_announcement_id = n.id
+        WHERE
+        m.common_user_id = #{commonUserId}
+        AND m.notice_announcement_id IS NOT NULL
+        and n.del_status != 0
+        <if test = "info.noticeTitle != null">
+            and n.notice_title like concat('%',#{info.noticeTitle},'%')
+        </if>
+        <if test = "info.keywords != null">
+            and n.keywords like concat('%',#{info.keywords},'%')
+        </if>
+    </select>
+
+    <select id="selectMyAttentionNoticeAnnouncementList" resultMap="NoticeAnnouncementMap">
+        SELECT n.id,n.preview,n.notice_title,n.receive_user,n.keywords,n.release_person,n.release_time,n.notice_detail,n.del_status
+        FROM my_attention m
+            LEFT JOIN notice_announcement n ON m.notice_announcement_id = n.id
+        WHERE
+        m.common_user_id = #{commonUserId}
+        AND m.notice_announcement_id IS NOT NULL
+        and n.del_status != 0
+        <if test = "info.noticeTitle != null">
+            and n.notice_title like concat('%',#{info.noticeTitle},'%')
+        </if>
+        <if test = "info.keywords != null">
+            and n.keywords like concat('%',#{info.keywords},'%')
+        </if>
+        order by m.id desc
+        limit #{page.startRow},#{page.pageSize}
+    </select>
+
+
+</mapper>

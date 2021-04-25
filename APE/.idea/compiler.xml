@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="activity" />
+        <module name="activity-api" />
+        <module name="administrator-api" />
+        <module name="advertising" />
+        <module name="advertising-api" />
+        <module name="base-api" />
+        <module name="config" />
+        <module name="redis-api" />
+        <module name="system-api" />
+        <module name="user" />
+        <module name="user-api" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="activity" target="1.8" />
+      <module name="activity-api" target="1.8" />
+      <module name="administrator" target="1.8" />
+      <module name="administrator-api" target="1.8" />
+      <module name="advertising" target="1.8" />
+      <module name="advertising-api" target="1.8" />
+      <module name="ape" target="1.8" />
+      <module name="base-api" target="1.8" />
+      <module name="config" target="1.8" />
+      <module name="dfs" target="1.8" />
+      <module name="eureka" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="news" target="1.8" />
+      <module name="news-api" target="1.8" />
+      <module name="redis-api" target="1.8" />
+      <module name="schedule" target="1.8" />
+      <module name="service" target="1.8" />
+      <module name="service-api" target="1.8" />
+      <module name="system" target="1.8" />
+      <module name="system-api" target="1.8" />
+      <module name="user" target="1.8" />
+      <module name="user-api" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

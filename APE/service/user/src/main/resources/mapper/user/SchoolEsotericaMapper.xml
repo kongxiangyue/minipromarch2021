@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.SchoolEsotericaMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.SchoolEsoterica" id="SchoolEsotericaMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="videoTitle" column="video_title" jdbcType="VARCHAR"/>
+        <result property="videoLink" column="video_link" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="videoStatus" column="video_status" jdbcType="INTEGER"/>
+        <result property="delStatus" column="del_status" jdbcType="INTEGER"/>
+        <result property="videoSort" column="video_sort" jdbcType="INTEGER"/>
+        <result property="previewNum" column="preview_num" jdbcType="INTEGER"/>
+        <result property="preview" column="preview" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="occupiedMemory" column="occupied_memory" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+         id, video_title, video_link, user_id, user_name, video_status, del_status, video_sort,preview_num,preview, create_time,occupied_memory
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="SchoolEsotericaMap">
+        select
+          <include refid="base_column"/>
+        from school_esoterica
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SchoolEsotericaMap">
+        select
+         <include refid="base_column"/>
+        from school_esoterica
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SchoolEsotericaMap">
+        select
+          <include refid="base_column"/>
+        from school_esoterica
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="videoTitle != null and videoTitle != ''">
+                and video_title = #{videoTitle}
+            </if>
+            <if test="videoLink != null and videoLink != ''">
+                and video_link = #{videoLink}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="videoStatus != null">
+                and video_status = #{videoStatus}
+            </if>
+            <if test="delStatus != null">
+                and del_status = #{delStatus}
+            </if>
+            <if test="videoSort != null">
+                and video_sort = #{videoSort}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="occupiedMemory != null">
+                and occupied_memory = #{occupiedMemory}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school_esoterica(video_title, video_link, user_id, user_name, video_status, del_status, video_sort,preview_num,preview, create_time,occupied_memory)
+        values (#{videoTitle}, #{videoLink}, #{userId}, #{userName}, #{videoStatus}, #{delStatus}, #{videoSort},#{previewNum},#{preview}, #{createTime},#{occupiedMemory})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school_esoterica
+        <set>
+            <if test="videoTitle != null and videoTitle != ''">
+                video_title = #{videoTitle},
+            </if>
+            <if test="videoLink != null and videoLink != ''">
+                video_link = #{videoLink},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="videoStatus != null">
+                video_status = #{videoStatus},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus},
+            </if>
+            <if test="videoSort != null">
+                video_sort = #{videoSort},
+            </if>
+            <if test="previewNum != null">
+                preview_num = #{previewNum},
+            </if>
+            <if test="preview != null">
+                preview = #{preview},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="occupiedMemory != null">
+               occupied_memory = #{occupiedMemory}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school_esoterica where id = #{id}
+    </delete>
+
+    <select id="selectSchoolEsotericaList" resultMap="SchoolEsotericaMap">
+        select
+        <include refid="base_column"/>
+        from school_esoterica
+        <where>
+            <if test="info.videoTitle != null and info.videoTitle != ''">
+                and video_title like concat('%', #{info.videoTitle} ,'%')
+            </if>
+            <if test="info.userId != null">
+                and user_id = #{info.userId}
+            </if>
+            <if test="info.videoStatus != null">
+                and video_status = #{info.videoStatus}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+            <if test="info.videoSort != null">
+                and video_sort = #{info.videoSort}
+            </if>
+        </where>
+        order by id
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+    <select id="selectSchoolEsotericaCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from school_esoterica
+        <where>
+            <if test="info.videoTitle != null and info.videoTitle != ''">
+                and video_title like concat('%', #{info.videoTitle} ,'%')
+            </if>
+            <if test="info.userId != null">
+                and user_id = #{info.userId}
+            </if>
+            <if test="info.videoStatus != null">
+                and video_status = #{info.videoStatus}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+            <if test="info.videoSort != null">
+                and video_sort = #{info.videoSort}
+            </if>
+        </where>
+    </select>
+
+</mapper>

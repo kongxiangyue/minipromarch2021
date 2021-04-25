@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.SchoolScoreMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.SchoolScore" id="SchoolScoreMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="professionCode" column="profession_code" jdbcType="VARCHAR"/>
+        <result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="lowestScore" column="lowest_score" jdbcType="INTEGER"/>
+        <result property="estimateScore" column="estimate_score" jdbcType="INTEGER"/>
+        <result property="enrollBatch" column="enroll_batch" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+           id, profession_code, school_code, year, lowest_score, estimate_score, enroll_batch, create_time
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SchoolScoreMap">
+        select
+          id, profession_code, school_code, year, lowest_score, estimate_score, enroll_batch, create_time
+        from school_score
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SchoolScoreMap">
+        select
+          id, profession_code, school_code, year, lowest_score, estimate_score, enroll_batch, create_time
+        from school_score
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SchoolScoreMap">
+        select
+          id, profession_code, school_code, year, lowest_score, estimate_score, enroll_batch, create_time
+        from school_score
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="professionCode != null and professionCode != ''">
+                and profession_code = #{professionCode}
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                and school_code = #{schoolCode}
+            </if>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+            <if test="lowestScore != null">
+                and lowest_score = #{lowestScore}
+            </if>
+            <if test="estimateScore != null and estimateScore != ''">
+                and estimate_score = #{estimateScore}
+            </if>
+            <if test="enrollBatch != null">
+                and enroll_batch = #{enrollBatch}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school_score(profession_code, school_code, year, lowest_score, estimate_score, enroll_batch, create_time)
+        values (#{professionCode}, #{schoolCode}, #{year}, #{lowestScore}, #{estimateScore}, #{enrollBatch}, #{createTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school_score
+        <set>
+            <if test="professionCode != null and professionCode != ''">
+                profession_code = #{professionCode},
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                school_code = #{schoolCode},
+            </if>
+            <if test="year != null">
+                year = #{year},
+            </if>
+            <if test="lowestScore != null">
+                lowest_score = #{lowestScore},
+            </if>
+            <if test="estimateScore != null and estimateScore != ''">
+                estimate_score = #{estimateScore},
+            </if>
+            <if test="enrollBatch != null">
+                enroll_batch = #{enrollBatch},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school_score where id = #{id}
+    </delete>
+
+
+    <select id="selectScoreBySchoolCodeAndYear" resultMap="SchoolScoreMap">
+        select <include refid="base_column"/> from school_score s where s.school_code = #{schoolCode}
+        and s.`year` &gt;= #{startYear} and  s.`year` &lt;= #{endYear}
+    </select>
+    <select id="selectOneByParams" resultMap="SchoolScoreMap">
+        select
+        <include refid="base_column"/>
+        from school_score
+        <where>
+            <if test="info.id != null">
+                and id = #{info.id}
+            </if>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and school_code = #{info.schoolCode}
+            </if>
+            <if test="info.year != null">
+                and year = #{info.year}
+            </if>
+            <if test="info.enrollBatch != null">
+                and enroll_batch = #{info.enrollBatch}
+            </if>
+
+            <if test="info.sort != null and info.sort == 1">
+                order by lowest_score asc
+            </if>
+            <if test="info.sort != null and info.sort == 2">
+                order by estimate_score asc
+            </if>
+        </where>
+        limit 1
+    </select>
+    <select id="selectSchoolScoreStatisticList" resultMap="SchoolScoreMap">
+        select
+        <include refid="base_column"/>
+        from school_score
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and school_code = #{info.schoolCode}
+            </if>
+            <if test="info.year != null">
+                and year = #{info.year}
+            </if>
+            <if test="info.enrollBatch != null">
+                and enroll_batch = #{info.enrollBatch}
+            </if>
+        </where>
+        order by year asc
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+    <select id="selectSchoolScoreStatisticCount" resultType="java.lang.Long">
+        select
+       count(1)
+        from school_score
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and school_code = #{info.schoolCode}
+            </if>
+            <if test="info.year != null">
+                and year = #{info.year}
+            </if>
+            <if test="info.enrollBatch != null">
+                and enroll_batch = #{info.enrollBatch}
+            </if>
+        </where>
+    </select>
+    <select id="selectYearGroupBySchoolCode" resultMap="SchoolScoreMap">
+        select s.year
+        from school_score s where s.school_code = #{info.schoolCode} group by s.year order by s.year asc
+        limit 6
+    </select>
+    <select id="selectThreeYearCodeBySchoolAndProfession" resultMap="SchoolScoreMap">
+        select <include refid="base_column"></include>
+        from school_score where profession_code = #{professionCode} and  school_code = #{schoolCode} and year &gt;= #{year} -3 and year &lt;= #{year}
+    </select>
+
+    <select id="schoolScoreProfessionCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from school_score
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and school_code = #{info.schoolCode}
+            </if>
+            <if test="info.year != null">
+                and year = #{info.year}
+            </if>
+            <if test="info.enrollBatch != null">
+                and enroll_batch = #{info.enrollBatch}
+            </if>
+        </where>
+    </select>
+    <select id="schoolScoreProfessionList" resultMap="SchoolScoreMap">
+        select
+        <include refid="base_column"/>
+        from school_score
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and school_code = #{info.schoolCode}
+            </if>
+            <if test="info.year != null">
+                and year = #{info.year}
+            </if>
+            <if test="info.enrollBatch != null">
+                and enroll_batch = #{info.enrollBatch}
+            </if>
+        </where>
+        order by year asc
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+
+    <delete id="deleteBySchoolAndProfession">
+        delete from school_score where school_code = #{schoolCode} and profession_code = #{professionCode}
+    </delete>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.SchoolEmploymentMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.SchoolEmployment" id="SchoolEmploymentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="employmentRate" column="employment_rate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column">
+        id, school_code, year, employment_rate
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SchoolEmploymentMap">
+        select
+          id, school_code, year, employment_rate
+        from school_employment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SchoolEmploymentMap">
+        select
+          id, school_code, year, employment_rate
+        from school_employment
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SchoolEmploymentMap">
+        select
+          id, school_code, year, employment_rate
+        from school_employment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                and school_code = #{schoolCode}
+            </if>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+            <if test="employmentRate != null and employmentRate != ''">
+                and employment_rate = #{employmentRate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school_employment(school_code, year, employment_rate)
+        values (#{schoolCode}, #{year}, #{employmentRate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school_employment
+        <set>
+            <if test="schoolCode != null and schoolCode != ''">
+                school_code = #{schoolCode},
+            </if>
+            <if test="year != null">
+                year = #{year},
+            </if>
+            <if test="employmentRate != null and employmentRate != ''">
+                employment_rate = #{employmentRate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school_employment where id = #{id}
+    </delete>
+
+    <select id="selectOneByParams" resultMap="SchoolEmploymentMap">
+        select
+        <include refid="base_column"></include>
+        from school_employment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                and school_code = #{schoolCode}
+            </if>
+            <if test="year != null">
+                and year = #{year}
+            </if>
+        </where>
+        order by year desc
+        limit 1
+    </select>
+
+</mapper>

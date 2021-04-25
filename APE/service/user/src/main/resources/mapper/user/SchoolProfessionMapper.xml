@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.SchoolProfessionMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.SchoolProfession" id="SchoolProfessionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+        <result property="professionCode" column="profession_code" jdbcType="VARCHAR"/>
+        <result property="schoolAcademy" column="school_academy" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column">
+         id, school_code, profession_code,school_academy
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SchoolProfessionMap">
+        select
+          <include refid="base_column"/>
+        from school_profession
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SchoolProfessionMap">
+        select
+        <include refid="base_column"/>
+        from school_profession
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SchoolProfessionMap">
+        select
+        <include refid="base_column"/>
+        from school_profession
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                and school_code = #{schoolCode}
+            </if>
+            <if test="professionCode != null and professionCode != ''">
+                and profession_code = #{professionCode}
+            </if>
+            <if test="schoolAcademy != null and schoolAcademy != ''">
+                and school_academy = #{schoolAcademy}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school_profession(school_code, profession_code,school_academy)
+        values (#{schoolCode}, #{professionCode},#{schoolAcademy})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school_profession
+        <set>
+            <if test="schoolCode != null and schoolCode != ''">
+                school_code = #{schoolCode},
+            </if>
+            <if test="professionCode != null and professionCode != ''">
+                profession_code = #{professionCode},
+            </if>
+            <if test="schoolAcademy != null and schoolAcademy != ''">
+                school_academy = #{schoolAcademy},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateSchoolAcademy">
+        update school_profession
+        <set>
+            <if test="updateSchoolAcademy != null and updateSchoolAcademy != ''">
+                school_academy = #{updateSchoolAcademy},
+            </if>
+        </set>
+        where school_academy = #{schoolAcademy} and school_code = #{schoolCode}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school_profession where id = #{id}
+    </delete>
+
+    <delete id="deleteSchoolAcademy">
+         delete from school_profession where school_academy = #{schoolAcademy} and school_code = #{schoolCode}
+    </delete>
+
+    <select id="selectSchoolAcademyCount" resultType="java.lang.Long">
+        select count(1) from (
+        select  distinct(school_academy) schoolAcademy,school_code schoolCode from school_profession
+        where school_code = #{info.schoolCode}
+        ) t1
+    </select>
+
+    <select id="selectSchoolAcademyList" resultType="com.yidaoyun.user.domain.SchoolProfession">
+        select  distinct(school_academy) schoolAcademy,school_code schoolCode from school_profession
+        where school_code = #{info.schoolCode}
+        order by id
+        limit #{info.startRow}, #{info.pageSize}
+    </select>
+
+    <select id="selectSchoolProfessionList" resultType="com.yidaoyun.user.bean.vo.SchoolProfessionVO">
+        select s.id,s.profession_code professionCode,s.school_academy schoolAcademy,s.school_code schoolCode,p.profession_name professionName from school_profession s
+        left join profession_catalogue p on s.profession_code = p.profession_code
+        where 1 = 1 and s.profession_code is not null
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and s.school_code = #{info.schoolCode}
+            </if>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and s.profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolAcademy != null and info.schoolAcademy != ''">
+                and s.school_academy = #{info.schoolAcademy}
+            </if>
+        order by id
+        limit #{info.startRow}, #{info.pageSize}
+    </select>
+    <select id="selectSchoolProfessionCount" resultType="java.lang.Long">
+        select count(1) from school_profession s left join profession_catalogue p on s.profession_code = p.profession_code
+        where 1 = 1 and s.profession_code is not null
+            <if test="info.schoolCode != null and info.schoolCode != ''">
+                and s.school_code = #{info.schoolCode}
+            </if>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and s.profession_code = #{info.professionCode}
+            </if>
+            <if test="info.schoolAcademy != null and info.schoolAcademy != ''">
+                and s.school_academy = #{info.schoolAcademy}
+            </if>
+    </select>
+    <select id="selectSchoolProfessionIsNull" resultType="com.yidaoyun.user.domain.SchoolProfession">
+        select <include refid="base_column"/> from school_profession
+        where school_code = #{schoolCode} and school_academy = #{schoolAcademy} and profession_code is null
+    </select>
+
+</mapper>

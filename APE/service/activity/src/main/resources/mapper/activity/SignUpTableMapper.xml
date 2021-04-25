@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidaoyun.activity.mapper.SignUpTableMapper">
+
+    <select id="myActivity" resultType="com.yidaoyun.activity.domain.SignUpTable">
+        SELECT sut.activity_id activityId,
+               sut.common_user_id commonUserId,
+               eci.company_name companyName,
+               eci.company_logo companyLogo,
+               a.activity_title activityTitle,
+               a.activity_start_time activityStartTime,
+               a.addr addr
+        FROM
+            sign_up_table sut
+                INNER JOIN activity a ON sut.activity_id = a.id
+                INNER JOIN enter_company eci ON a.enter_company_id = eci.id
+        WHERE
+            sut.common_user_id = #{commonUserId}
+        ORDER BY
+            a.activity_start_time DESC
+    </select>
+    <select id="selectActivitySignUpTotal" resultType="com.yidaoyun.activity.bean.vo.ActivitySignUpTotalVO">
+        SELECT
+            t1.time date,count( 1 ) total
+        FROM
+            ( SELECT DATE( s.sign_up_time ) time FROM sign_up_table s WHERE s.activity_id = #{id}
+            AND s.sign_up_time between #{startTime} and #{endTime} )  t1
+        GROUP BY
+	    t1.time
+
+    </select>
+</mapper>

@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.ProfessionCatalogueMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.ProfessionCatalogue" id="ProfessionCatalogueMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="professionCode" column="profession_code" jdbcType="VARCHAR"/>
+        <result property="professionName" column="profession_name" jdbcType="VARCHAR"/>
+        <result property="oneKindCode" column="one_kind_code" jdbcType="VARCHAR"/>
+        <result property="oneKindName" column="one_kind_name" jdbcType="VARCHAR"/>
+        <result property="twoKindCode" column="two_kind_code" jdbcType="VARCHAR"/>
+        <result property="twoKindName" column="two_kind_name" jdbcType="VARCHAR"/>
+        <result property="professionDetail" column="profession_detail" jdbcType="VARCHAR"/>
+        <result property="professionLevel" column="profession_level" jdbcType="VARCHAR"/>
+        <result property="studyPeriod" column="study_period" jdbcType="VARCHAR"/>
+        <result property="fosterTarget" column="foster_target" jdbcType="VARCHAR"/>
+        <result property="jobDirection" column="job_direction" jdbcType="VARCHAR"/>
+        <result property="trainingCourses" column="training_courses" jdbcType="VARCHAR"/>
+        <result property="secondaryVocational" column="secondary_vocational" jdbcType="VARCHAR"/>
+        <result property="bachelorDegree" column="bachelor_degree" jdbcType="VARCHAR"/>
+        <result property="vocationalAbility" column="vocational_ability" jdbcType="VARCHAR"/>
+        <result property="professionClick" column="profession_click" jdbcType="INTEGER"/>
+        <result property="delStatus" column="del_status" jdbcType="INTEGER"/>
+        <result property="subjectType" column="subject_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+         id, profession_code, profession_name, one_kind_code, one_kind_name, two_kind_code, two_kind_name, profession_detail, profession_level, study_period, foster_target, job_direction, training_courses, secondary_vocational, bachelor_degree, profession_click, del_status, create_time,subject_type,vocational_ability
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProfessionCatalogueMap">
+        select
+         <include refid="base_column"></include>
+        from profession_catalogue
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProfessionCatalogueMap">
+        select
+        <include refid="base_column"></include>
+        from profession_catalogue
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProfessionCatalogueMap">
+        select
+        <include refid="base_column"></include>
+        from profession_catalogue
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="professionCode != null and professionCode != ''">
+                and profession_code = #{professionCode}
+            </if>
+            <if test="professionName != null and professionName != ''">
+                and profession_name = #{professionName}
+            </if>
+            <if test="oneKindCode != null and oneKindCode != ''">
+                and one_kind_code = #{oneKindCode}
+            </if>
+            <if test="oneKindName != null and oneKindName != ''">
+                and one_kind_name = #{oneKindName}
+            </if>
+            <if test="twoKindCode != null and twoKindCode != ''">
+                and two_kind_code = #{twoKindCode}
+            </if>
+            <if test="twoKindName != null and twoKindName != ''">
+                and two_kind_name = #{twoKindName}
+            </if>
+            <if test="professionDetail != null and professionDetail != ''">
+                and profession_detail = #{professionDetail}
+            </if>
+            <if test="professionLevel != null and professionLevel != ''">
+                and profession_level = #{professionLevel}
+            </if>
+            <if test="studyPeriod != null and studyPeriod != ''">
+                and study_period = #{studyPeriod}
+            </if>
+            <if test="fosterTarget != null and fosterTarget != ''">
+                and foster_target = #{fosterTarget}
+            </if>
+            <if test="jobDirection != null and jobDirection != ''">
+                and job_direction = #{jobDirection}
+            </if>
+            <if test="trainingCourses != null and trainingCourses != ''">
+                and training_courses = #{trainingCourses}
+            </if>
+            <if test="secondaryVocational != null and secondaryVocational != ''">
+                and secondary_vocational = #{secondaryVocational}
+            </if>
+            <if test="bachelorDegree != null and bachelorDegree != ''">
+                and bachelor_degree = #{bachelorDegree}
+            </if>
+            <if test="professionClick != null and professionClick != ''">
+                and profession_click = #{professionClick}
+            </if>
+            <if test="delStatus != null">
+                and del_status = #{delStatus}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into profession_catalogue(profession_code, profession_name, one_kind_code, one_kind_name, two_kind_code, two_kind_name, profession_detail, profession_level, study_period, foster_target, job_direction, training_courses, secondary_vocational, bachelor_degree, profession_click, del_status, create_time,subject_type)
+        values (#{professionCode}, #{professionName}, #{oneKindCode}, #{oneKindName}, #{twoKindCode}, #{twoKindName}, #{professionDetail}, #{professionLevel}, #{studyPeriod}, #{fosterTarget}, #{jobDirection}, #{trainingCourses}, #{secondaryVocational}, #{bachelorDegree}, #{professionClick}, #{delStatus}, #{createTime},#{subjectType})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update profession_catalogue
+        <set>
+            <if test="professionCode != null and professionCode != ''">
+                profession_code = #{professionCode},
+            </if>
+            <if test="professionName != null and professionName != ''">
+                profession_name = #{professionName},
+            </if>
+            <if test="oneKindCode != null and oneKindCode != ''">
+                one_kind_code = #{oneKindCode},
+            </if>
+            <if test="oneKindName != null and oneKindName != ''">
+                one_kind_name = #{oneKindName},
+            </if>
+            <if test="twoKindCode != null and twoKindCode != ''">
+                two_kind_code = #{twoKindCode},
+            </if>
+            <if test="twoKindName != null and twoKindName != ''">
+                two_kind_name = #{twoKindName},
+            </if>
+            <if test="professionDetail != null and professionDetail != ''">
+                profession_detail = #{professionDetail},
+            </if>
+            <if test="professionLevel != null and professionLevel != ''">
+                profession_level = #{professionLevel},
+            </if>
+            <if test="studyPeriod != null and studyPeriod != ''">
+                study_period = #{studyPeriod},
+            </if>
+            <if test="fosterTarget != null and fosterTarget != ''">
+                foster_target = #{fosterTarget},
+            </if>
+            <if test="jobDirection != null and jobDirection != ''">
+                job_direction = #{jobDirection},
+            </if>
+            <if test="trainingCourses != null and trainingCourses != ''">
+                training_courses = #{trainingCourses},
+            </if>
+            <if test="secondaryVocational != null and secondaryVocational != ''">
+                secondary_vocational = #{secondaryVocational},
+            </if>
+            <if test="bachelorDegree != null and bachelorDegree != ''">
+                bachelor_degree = #{bachelorDegree},
+            </if>
+            <if test="professionClick != null and professionClick != ''">
+                profession_click = #{professionClick},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus},
+            </if>
+            <if test="subjectType != null">
+                subject_type = #{subjectType},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from profession_catalogue where id = #{id}
+    </delete>
+
+    <select id="selectOneKindGroup" resultType="com.yidaoyun.user.bean.vo.OneKindGroupVO">
+        SELECT p.one_kind_code oneKindCode,p.one_kind_name oneKindName FROM profession_catalogue p
+        where 1= 1
+        <if test="info.oneKindName != null ">
+          and  p.one_kind_name = #{info.oneKindName}
+        </if>
+        group by  p.one_kind_code
+        <if test="info.startRow != null and info.pageSize != null ">
+            limit #{info.startRow},#{info.pageSize}
+        </if>
+    </select>
+
+    <select id="selectOneKindGroupCount" resultType="java.lang.Long">
+       select count(1) from (
+       SELECT 1 FROM profession_catalogue p
+        where 1= 1
+        <if test="info.oneKindName != null ">
+           and p.one_kind_name = #{info.oneKindName}
+        </if>
+        group by  p.one_kind_code
+        ) t1
+    </select>
+
+    <select id="selectProfessionDirectoryList" resultType="com.yidaoyun.user.bean.vo.ProfessionDirectoryVO">
+        SELECT p.id,p.profession_code professionCode,p.profession_name professionName,p.one_kind_name oneKindName,t1.lowest_score lowestScore,t2.estimate_score estimateScore,
+        p.profession_level professionLevel,t3.openSchoolNum,
+        t4.rownum nationwideFocusRanking,t5.oneKindFocusRanking
+        FROM profession_catalogue p
+        left join (select MIN(s.lowest_score) lowest_score,s.profession_code,s.year from school_score s where s.year = #{info.year} -1 GROUP BY s.profession_code ) t1 on t1.profession_code = p.profession_code
+        left join (SELECT MIN(s2.estimate_score) estimate_score,	s2.profession_code,s2.YEAR FROM school_score s2 WHERE s2.YEAR =  #{info.year} GROUP BY s2.profession_code ) t2 on t2.profession_code = p.profession_code
+        left join ( select sp.profession_code,count(1) openSchoolNum from  school_profession sp  group by sp.profession_code) t3
+        on t3.profession_code = p.profession_code
+        left join (
+        SELECT p.profession_code,p.profession_name,p.profession_click,CASE
+        WHEN @rowtotal = p.profession_click THEN
+            @rownum
+        WHEN @rowtotal := p.profession_click THEN
+            @rownum :=@rownum + 1
+        WHEN @rowtotal = 0 THEN
+            @rownum :=@rownum + 1
+        END AS rownum
+        FROM
+            (SELECT profession_code,profession_name,profession_click FROM profession_catalogue ORDER BY profession_click DESC) AS p,
+            (SELECT @rownum := 0 ,@rowtotal := null) r
+        ) t4 on t4.profession_code = p.profession_code
+        left join (
+        SELECT k2.profession_code,k2.profession_name,k2.profession_click,CASE
+        WHEN @rowtotal2 = k2.profession_click THEN
+            @rownum2
+        WHEN @rowtotal2 := k2.profession_click THEN
+            @rownum2 :=@rownum2 + 1
+        WHEN @rowtotal2 = 0 THEN
+            @rownum2 :=@rownum2 + 1
+        END AS oneKindFocusRanking
+        FROM
+            (
+                SELECT k.profession_code,k.profession_name,k.profession_click FROM  profession_catalogue k
+                where k.one_kind_code = #{info.oneKindCode} ORDER BY k.profession_click DESC) AS k2,
+            (SELECT @rownum2 := 0 ,@rowtotal2 := null) o
+        ) t5 on t5.profession_code = p.profession_code
+        where p.one_kind_code = #{info.oneKindCode}
+        <if test="info.professionName !=null">
+        and p.profession_name like concat('%', #{info.professionName} ,'%')
+        </if>
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score  &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+        <if test="info.sortType != null and info.sortType == 1">
+            order by t4.rownum
+        </if>
+        <if test="info.sortType != null and info.sortType == 2">
+            order by t5.oneKindFocusRanking
+        </if>
+    </select>
+
+    <select id="selectProfessionInstitutionsList"  resultType="com.yidaoyun.user.bean.vo.ProfessionInstItutionsVO">
+        select sp.school_code schoolCode,sp.profession_code professionCode,ec.id,ec.company_name companyName,se.school_website schoolWebsite,
+        se.enrolment_website enrolmentWebsite,se.school_type schoolType,ec.province,ec.city,se.school_website_click schoolWebsiteClick,se.enrolment_website_click enrolmentWebsiteClick,
+        se.school_contrast schoolContrast,t1.lowest_score lowestScore,t2.estimate_score estimateScore,t2.enroll_batch enrollBatch
+        from school_profession sp
+        left join school_extend se on sp.school_code = se.school_code
+        left join enter_company ec on ec.id = se.id
+        left join (select s1.lowest_score,s1.profession_code,s1.school_code from school_score s1 where s1.`year` = #{info.year}-1 and s1.profession_code = #{info.professionCode}  order by s1.lowest_score limit 1) t1
+        on t1.school_code = sp.school_code
+        left join (select s2.estimate_score,s2.profession_code,s2.school_code,s2.enroll_batch from school_score s2 where s2.`year` = #{info.year} and s2.profession_code = #{info.professionCode} order by s2.estimate_score limit 1) t2
+        on t2.school_code = sp.school_code
+        where sp.profession_code = #{info.professionCode}
+        <if test="info.enrollBatch">
+            and t2.enroll_batch = #{info.enrollBatch}
+        </if>
+        <if test="info.companyName != null">
+            and ec.company_name like concat('%', #{info.companyName} ,'%')
+        </if>
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+        order by se.school_website_click desc
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+
+    <select id="selectProfessionInstitutionsCount" resultType="java.lang.Long">
+    select count(1)
+    from school_profession sp
+    left join school_extend se on sp.school_code = se.school_code
+    left join enter_company ec on ec.id = se.id
+    left join (select s1.lowest_score,s1.profession_code,s1.school_code from school_score s1 where s1.`year` = #{info.year}-1 and s1.profession_code = #{info.professionCode} order by s1.lowest_score limit 1) t1
+    on t1.school_code = sp.school_code
+    left join (select s2.estimate_score,s2.profession_code,s2.school_code,s2.enroll_batch from school_score s2 where s2.`year` = #{info.year} and s2.profession_code = #{info.professionCode} order by s2.estimate_score limit 1) t2
+    on t2.school_code = sp.school_code
+    where sp.profession_code = #{info.professionCode}
+    <if test="info.enrollBatch">
+        and t2.enroll_batch = #{info.enrollBatch}
+    </if>
+    <if test="info.companyName != null">
+        and ec.company_name like concat('%',  #{info.companyName} ,'%')
+    </if>
+    <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+        and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+    </if>
+    <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+        and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+    </if>
+    </select>
+
+    <select id="selectFindProfessionScoreCount" resultType="java.lang.Long">
+        SELECT count(1)
+        from school_extend ss left join enter_company e on ss.id = e.id
+        left join school_profession sp on ss.school_code = sp.school_code
+        left join profession_catalogue p on p.profession_code = sp.profession_code
+        left join (select MIN(s.lowest_score) lowest_score,s.profession_code,s.year from school_score s where s.year = #{info.year} -1  GROUP BY s.profession_code ) t1 on t1.profession_code = p.profession_code
+        left join (select MIN(s2.estimate_score) estimate_score,s2.profession_code,s2.year,s2.enroll_batch from school_score s2 where s2.year = #{info.year}  GROUP BY  s2.profession_code ) t2 on t2.profession_code = p.profession_code
+        left join (
+        SELECT p.profession_code,p.profession_name,p.profession_click,CASE
+        WHEN @rowtotal = p.profession_click THEN
+        @rownum
+        WHEN @rowtotal := p.profession_click THEN
+        @rownum :=@rownum + 1
+        WHEN @rowtotal = 0 THEN
+        @rownum :=@rownum + 1
+        END AS nationwideFocusRanking
+        FROM
+        (SELECT profession_code,profession_name,profession_click FROM profession_catalogue ORDER BY profession_click DESC) AS p,
+        (SELECT @rownum := 0 ,@rowtotal := null) r
+        ) t4 on t4.profession_code = sp.profession_code
+        where  1=1  and p.id is not null
+        <if test="info.enrollBatch !=null">
+            and t2.enroll_batch = #{info.enrollBatch}
+        </if>
+        <if test="info.subjectType != null">
+            and p.subject_type = #{info.subjectType}
+        </if>
+        <if test="info.oneKindName != null">
+            and p.one_kind_name = #{info.oneKindName}
+        </if>
+        <if test="info.professionName != null">
+            and p.profession_name like concat('%', #{info.professionName} ,'%')
+        </if>
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+    </select>
+
+    <select id="selectFindProfessionScoreList" resultType="com.yidaoyun.user.bean.vo.FindProfessionScoreVO">
+        SELECT p.id,p.profession_name professionName,sp.profession_code professionCode,p.one_kind_name oneKindName ,
+        p.one_kind_code oneKindCode,e.company_name companyName,ss.school_code schoolCode,t1.lowest_score lowestScore,
+        t2.enroll_batch enrollBatch,t2.estimate_score estimateScore,t4.nationwideFocusRanking
+        from school_extend ss left join enter_company e on ss.id = e.id
+        left join school_profession sp on ss.school_code = sp.school_code
+        left join profession_catalogue p on p.profession_code = sp.profession_code
+        left join (select MIN(s.lowest_score) lowest_score,s.profession_code,s.year from school_score s where s.year = #{info.year} -1  GROUP BY s.profession_code ) t1 on t1.profession_code = p.profession_code
+        left join (select MIN(s2.estimate_score) estimate_score,s2.profession_code,s2.year,s2.enroll_batch from school_score s2 where s2.year = #{info.year}  GROUP BY  s2.profession_code ) t2 on t2.profession_code = p.profession_code
+        left join (
+        SELECT p.profession_code,p.profession_name,p.profession_click,CASE
+        WHEN @rowtotal = p.profession_click THEN
+            @rownum
+        WHEN @rowtotal := p.profession_click THEN
+            @rownum :=@rownum + 1
+        WHEN @rowtotal = 0 THEN
+            @rownum :=@rownum + 1
+        END AS nationwideFocusRanking
+        FROM
+            (SELECT profession_code,profession_name,profession_click FROM profession_catalogue ORDER BY profession_click DESC) AS p,
+            (SELECT @rownum := 0 ,@rowtotal := null) r
+        ) t4 on t4.profession_code = sp.profession_code
+        where  1=1 and p.id is not null
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+        <if test="info.enrollBatch !=null">
+            and t2.enroll_batch = #{info.enrollBatch}
+        </if>
+        <if test="info.subjectType != null">
+            and p.subject_type = #{info.subjectType}
+        </if>
+        <if test="info.oneKindName != null">
+            and p.one_kind_name = #{info.oneKindName}
+        </if>
+        <if test="info.professionName != null">
+            and p.profession_name like concat('%', #{info.professionName} ,'%')
+        </if>
+        <if test="info.sortType != null and info.sortType ==1">
+            order by t4.nationwideFocusRanking desc
+        </if>
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+    <select id="selectOneKindFocusRanking" resultType="java.lang.Integer">
+        select t1.oneKindFocusRanking from (
+        SELECT k2.profession_code,k2.profession_name,k2.profession_click,k2.one_kind_name,CASE
+        WHEN @rowtotal2 = k2.profession_click THEN
+            @rownum2
+        WHEN @rowtotal2 := k2.profession_click THEN
+            @rownum2 :=@rownum2 + 1
+        WHEN @rowtotal2 = 0 THEN
+            @rownum2 :=@rownum2 + 1
+        END AS oneKindFocusRanking
+        FROM
+            (
+                SELECT k.profession_code,k.profession_name,k.profession_click, k.one_kind_name  FROM  profession_catalogue k
+						where k.one_kind_name = #{oneKindName} ORDER BY k.profession_click DESC) AS k2,
+            (SELECT @rownum2 := 0 ,@rowtotal2 := null) o
+        ) t1
+    where t1.profession_code = #{professionCode}
+    </select>
+
+    <select id="selectProfessionDetail" resultType="com.yidaoyun.user.bean.vo.ProfessionDetailVO">
+      select p.id,p.profession_code professionCode,p.profession_name professionName,p.profession_click professionClick,p.study_period studyPeriod,
+       p.foster_target fosterTarget,p.job_direction jobDirection,p.training_courses trainingCourses,
+        p.secondary_vocational secondaryVocational,p.bachelor_degree bachelorDegree,e.province,e.city,e.company_name companyName ,s.school_type schoolType,
+        s.school_characteristic schoolCharacteristic,p.vocational_ability vocationalAbility,
+        s.school_superiority schoolSuperiority,s.school_website schoolWebsite,s.enrolment_website enrolmentWebsite,s.enrolment_tel enrolmentTel,s.school_code schoolCode
+        from school_profession sp
+        left join profession_catalogue p on p.profession_code = sp.profession_code
+        left join school_extend s on sp.school_code = s.school_code
+        left join enter_company e on s.id = e.id
+        where sp.profession_code = #{professionCode} and sp.school_code = #{schoolCode}
+
+    </select>
+    <select id="selectTwoKindGroupCount" resultType="java.lang.Long">
+    select count(1) from (
+        select distinct(p.two_kind_code) twoKindCode,p.two_kind_name twoKindName,p.one_kind_code oneKindCode,p.one_kind_name oneKindName from profession_catalogue p where 1=1
+        <if test="info.oneKindCode != null">
+            and p.one_kind_code = #{info.oneKindCode}
+        </if>
+        <if test="info.oneKindName != null">
+            and p.one_kind_name like concat('%',#{info.oneKindName},'%')
+        </if>
+        <if test="info.twoKindCode != null">
+            and p.two_kind_code = #{info.twoKindCode}
+        </if>
+        <if test="info.twoKindName != null">
+            and p.two_kind_name like concat('%',#{info.twoKindName},'%')
+        </if>
+    ) t1
+    </select>
+    <select id="selectTwoKindGroup" resultType="com.yidaoyun.user.bean.vo.OneKindGroupVO">
+        select distinct(p.two_kind_code) twoKindCode,p.two_kind_name twoKindName,p.one_kind_code oneKindCode,p.one_kind_name oneKindName from profession_catalogue p where 1=1
+        <if test="info.oneKindCode != null">
+            and p.one_kind_code = #{info.oneKindCode}
+        </if>
+        <if test="info.oneKindName != null">
+            and p.one_kind_name like concat('%',#{info.oneKindName},'%')
+        </if>
+        <if test="info.twoKindCode != null">
+            and p.two_kind_code = #{info.twoKindCode}
+        </if>
+        <if test="info.twoKindName != null">
+            and p.two_kind_name like concat('%',#{info.twoKindName},'%')
+        </if>
+        <if test="info.startRow != null and info.pageSize != null ">
+            limit #{info.startRow},#{info.pageSize}
+        </if>
+    </select>
+    <select id="selectProfessionCatalogueCount" resultType="java.lang.Long">
+        select
+       count(1)
+        from profession_catalogue
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.professionName != null and info.professionName != ''">
+                and profession_name like concat('%', #{info.professionName} ,'%')
+            </if>
+            <if test="info.oneKindCode != null and info.oneKindCode != ''">
+                and one_kind_code = #{info.oneKindCode}
+            </if>
+            <if test="info.oneKindName != null and info.oneKindName != ''">
+                and one_kind_name  like concat('%',#{info.oneKindName},'%')
+            </if>
+            <if test="info.twoKindCode != null and info.twoKindCode != ''">
+                and two_kind_code = #{info.twoKindCode}
+            </if>
+            <if test="info.twoKindName != null and info.twoKindName != ''">
+                and two_kind_name like concat('%',#{info.twoKindName},'%')
+            </if>
+            <if test="info.professionDetail != null and info.professionDetail != ''">
+                and profession_detail = #{info.professionDetail}
+            </if>
+            <if test="info.professionLevel != null and info.professionLevel != ''">
+                and profession_level = #{info.professionLevel}
+            </if>
+            <if test="info.studyPeriod != null and info.studyPeriod != ''">
+                and study_period = #{info.studyPeriod}
+            </if>
+            <if test="info.fosterTarget != null and info.fosterTarget != ''">
+                and foster_target = #{info.fosterTarget}
+            </if>
+            <if test="info.jobDirection != null and info.jobDirection != ''">
+                and job_direction = #{info.jobDirection}
+            </if>
+            <if test="info.trainingCourses != null and info.trainingCourses != ''">
+                and training_courses = #{info.trainingCourses}
+            </if>
+            <if test="info.secondaryVocational != null and info.secondaryVocational != ''">
+                and secondary_vocational = #{info.secondaryVocational}
+            </if>
+            <if test="info.bachelorDegree != null and info.bachelorDegree != ''">
+                and bachelor_degree = #{info.bachelorDegree}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+        </where>
+    </select>
+    <select id="selectProfessionCatalogueList" resultMap="ProfessionCatalogueMap">
+        select
+        <include refid="base_column"></include>
+        from profession_catalogue
+        <where>
+            <if test="info.professionCode != null and info.professionCode != ''">
+                and profession_code = #{info.professionCode}
+            </if>
+            <if test="info.professionName != null and info.professionName != ''">
+                and profession_name like concat('%', #{info.professionName} ,'%')
+            </if>
+            <if test="info.oneKindCode != null and info.oneKindCode != ''">
+                and one_kind_code = #{info.oneKindCode}
+            </if>
+            <if test="info.oneKindName != null and info.oneKindName != ''">
+                and one_kind_name  like concat('%',#{info.oneKindName},'%')
+            </if>
+            <if test="info.twoKindCode != null and info.twoKindCode != ''">
+                and two_kind_code = #{info.twoKindCode}
+            </if>
+            <if test="info.twoKindName != null and info.twoKindName != ''">
+                and two_kind_name like concat('%',#{info.twoKindName},'%')
+            </if>
+            <if test="info.professionDetail != null and info.professionDetail != ''">
+                and profession_detail = #{info.professionDetail}
+            </if>
+            <if test="info.professionLevel != null and info.professionLevel != ''">
+                and profession_level = #{info.professionLevel}
+            </if>
+            <if test="info.studyPeriod != null and info.studyPeriod != ''">
+                and study_period = #{info.studyPeriod}
+            </if>
+            <if test="info.fosterTarget != null and info.fosterTarget != ''">
+                and foster_target = #{info.fosterTarget}
+            </if>
+            <if test="info.jobDirection != null and info.jobDirection != ''">
+                and job_direction = #{info.jobDirection}
+            </if>
+            <if test="info.trainingCourses != null and info.trainingCourses != ''">
+                and training_courses = #{info.trainingCourses}
+            </if>
+            <if test="info.secondaryVocational != null and info.secondaryVocational != ''">
+                and secondary_vocational = #{info.secondaryVocational}
+            </if>
+            <if test="info.bachelorDegree != null and info.bachelorDegree != ''">
+                and bachelor_degree = #{info.bachelorDegree}
+            </if>
+            <if test="info.delStatus != null">
+                and del_status = #{info.delStatus}
+            </if>
+        </where>
+        order by profession_code desc
+        limit #{info.startRow}, #{info.pageSize}
+    </select>
+    <select id="selectOneByProfessionCode" resultMap="ProfessionCatalogueMap">
+        select
+        <include refid="base_column"></include>
+        from profession_catalogue
+        where  profession_code= #{professionCode}
+    </select>
+
+</mapper>

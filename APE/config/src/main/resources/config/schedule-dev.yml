@@ -1,0 +1,12 @@
+uncode:
+  schedule:
+    zkConnect: 10.18.4.17:2181
+    rootPath: /uncode/schedule
+    zkSessionTimeout: 60000
+    zkUsername: yidaoyun
+    zkPassword: zk1daoyun
+    enabled: true
+    enabledLanding: true
+
+server:
+  port: 9007

@@ -1,0 +1,244 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/activity/activity",
+      "style": {
+        "navigationBarTitleText": "活动"
+      }
+    },
+    {
+      "path": "pages/user/user",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/activity/components/activityDetailCmpt",
+      "style": {
+        "navigationBarTitleText": "图文详情"
+      }
+    },
+    {
+      "path": "pages/activity/components/activityInfoCmpt",
+      "style": {
+        "navigationBarTitleText": "活动详情"
+      }
+    },
+    {
+      "path": "pages/personalInfo/personalInfo",
+      "style": {
+        "navigationBarTitleText": "个人资料"
+      }
+    },
+    {
+      "path": "pages/activityOrder/activityOrder",
+      "style": {
+        "navigationBarTitleText": "活动订单"
+      }
+    },
+    {
+      "path": "pages/concern/concern",
+      "style": {
+        "navigationBarTitleText": "我的关注"
+      }
+    },
+    {
+      "path": "pages/aboutus/aboutus",
+      "style": {
+        "navigationBarTitleText": "关于我们"
+      }
+    },
+    {
+      "path": "pages/question/question",
+      "style": {
+        "navigationBarTitleText": "常见问题"
+      }
+    },
+    {
+      "path": "pages/feedback/feedback",
+      "style": {
+        "navigationBarTitleText": "意见反馈"
+      }
+    },
+    {
+      "path": "pages/signUp/signUp",
+      "style": {
+        "navigationBarTitleText": "报名信息"
+      }
+    },
+    {
+      "path": "pages/check/check",
+      "style": {
+        "navigationBarTitleText": "扫码签到"
+      }
+    },
+    {
+      "path": "pages/check/checkSuccess",
+      "style": {
+        "navigationBarTitleText": "扫码签到"
+      }
+    },
+    {
+      "path": "pages/check/checkError",
+      "style": {
+        "navigationBarTitleText": "扫码签到"
+      }
+    },
+    {
+      "path": "pages/updatePhone/updatePhone",
+      "style": {
+        "navigationBarTitleText": "修改手机号"
+      }
+    },
+    {
+      "path": "pages/orderDetails/orderDetails",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/checkPhone/checkPhone",
+      "style": {
+        "navigationBarTitleText": "手机绑定"
+      }
+    },
+    {
+      "path": "pages/activityOrderInfo/activityOrderInfo",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/check/checkNoSign",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/uploadCredentials/uploadCredentials",
+      "style": {
+        "navigationBarTitleText": "上传凭证"
+      }
+    },
+    {
+      "path": "pages/submitSuccessfully/submitSuccessfully",
+      "style": {
+        "navigationBarTitleText": "提交成功"
+      }
+    },
+    {
+      "path": "pages/webView/webView",
+      "style": {
+        "navigationBarTitleText": "图文详情"
+      }
+    },
+    {
+      "path": "pages/fileDetails/fileDetails",
+      "style": {
+        "navigationBarTitleText": "文件详情"
+      }
+    },
+    {
+      "path": "pages/submitSuccessfully/submitSuccessfullyFreeAdmission",
+      "style": {
+        "navigationBarTitleText": "提交成功"
+      }
+    },
+    {
+      "path": "pages/authorize/authorize",
+      "style": {
+        "navigationBarTitleText": "授权登录"
+      }
+    },
+    {
+      "path": "pages/search/search",
+      "style": {
+        "navigationBarTitleText": "搜索结果"
+      }
+    },
+    {
+      "path": "pages/activityHead/activityHead",
+      "style": {
+        "navigationBarTitleText": "活动头条"
+      }
+    },
+    {
+      "path": "pages/activityHead/components/detail",
+      "style": {
+        "navigationBarTitleText": "资讯详情"
+      }
+    },
+    {
+      "path": "pages/activityHead/components/search",
+      "style": {
+        "navigationBarTitleText": "搜索结果"
+      }
+    },
+    {
+      "path": "pages/activityHead/components/moreSearch",
+      "style": {
+        "navigationBarTitleText": "搜索结果"
+      }
+    },
+    {
+      "path": "pages/settledUnit/settledUnit",
+      "style": {
+        "navigationBarTitleText": "入驻单位"
+      }
+    },
+    {
+      "path": "pages/settledUnit/components/unitDetails",
+      "style": {
+        "navigationBarTitleText": "单位详情"
+      }
+    }
+
+      ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#333333",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/index.png",
+        "selectedIconPath": "./static/tabbar/index-a.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/activity/activity",
+        "iconPath": "static/tabbar/activity.png",
+        "selectedIconPath": "static/tabbar/activity-a.png",
+        "text": "活动"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "static/tabbar/user.png",
+        "selectedIconPath": "static/tabbar/user-a.png",
+        "text": "我的"
+      }
+    ]
+  }
+}

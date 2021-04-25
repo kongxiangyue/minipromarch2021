@@ -1,0 +1,86 @@
+<template>
+  <view class="background">
+    <view class="image">
+      <image :src="image"></image>
+    </view>
+    <view class="tip">检票成功</view>
+    <view class="title">赶快去参与现场互动吧！</view>
+    <view class="button" @click="LiveEvaluation"><button>直播评价</button></view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      image: '/static/success.png',
+      id: ''
+    }
+  },
+  onLoad(option) {
+    console.log(option.id);
+    this.id = option.id;
+  },
+  methods: {
+    LiveEvaluation() {}
+  }
+}
+</script>
+
+<style scoped>
+.background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+}
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 69upx;
+}
+.image image {
+  width: 170upx;
+  height: 170upx;
+}
+.tip {
+  font-size: 36upx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+  padding-top: 40upx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title {
+  font-size: 24upx;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: rgba(102, 102, 102, 1);
+  padding-top: 19upx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button {
+  padding-top: 59upx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button button {
+  color: rgba(65, 139, 226, 1);
+  width: 210upx;
+  height: 70upx;
+  border: 2upx solid rgba(65, 139, 226, 1);
+  border-radius: 35upx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30upx;
+}
+</style>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidaoyun.user.mapper.SchoolExtendMapper">
+
+    <resultMap type="com.yidaoyun.user.domain.SchoolExtend" id="SchoolExtendMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+        <result property="schoolCharacteristic" column="school_characteristic" jdbcType="VARCHAR"/>
+        <result property="enrolmentType" column="enrolment_type" jdbcType="VARCHAR"/>
+        <result property="enrolmentTel" column="enrolment_tel" jdbcType="VARCHAR"/>
+        <result property="schoolSuperiority" column="school_superiority" jdbcType="VARCHAR"/>
+        <result property="schoolType" column="school_type" jdbcType="OTHER"/>
+        <result property="schoolWebsite" column="school_website" jdbcType="VARCHAR"/>
+        <result property="enrolmentWebsite" column="enrolment_website" jdbcType="VARCHAR"/>
+        <result property="enrolmentBrochure" column="enrolment_brochure" jdbcType="VARCHAR"/>
+        <result property="schoolSynopsis" column="school_synopsis" jdbcType="VARCHAR"/>
+        <result property="schoolWebsiteClick" column="school_website_click" jdbcType="INTEGER"/>
+        <result property="enrolmentWebsiteClick" column="enrolment_website_click" jdbcType="INTEGER"/>
+        <result property="schoolContrast" column="school_contrast" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap type="com.yidaoyun.user.bean.vo.SchoolDeatilVO" id="SchoolDeatilMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+        <result property="schoolCharacteristic" column="school_characteristic" jdbcType="VARCHAR"/>
+        <result property="enrolmentType" column="enrolment_type" jdbcType="VARCHAR"/>
+        <result property="enrolmentTel" column="enrolment_tel" jdbcType="VARCHAR"/>
+        <result property="schoolSuperiority" column="school_superiority" jdbcType="VARCHAR"/>
+        <result property="schoolType" column="school_type" jdbcType="OTHER"/>
+        <result property="schoolWebsite" column="school_website" jdbcType="VARCHAR"/>
+        <result property="enrolmentWebsite" column="enrolment_website" jdbcType="VARCHAR"/>
+        <result property="enrolmentBrochure" column="enrolment_brochure" jdbcType="VARCHAR"/>
+        <result property="schoolSynopsis" column="school_synopsis" jdbcType="VARCHAR"/>
+        <result property="schoolWebsiteClick" column="school_website_click" jdbcType="INTEGER"/>
+        <result property="enrolmentWebsiteClick" column="enrolment_website_click" jdbcType="INTEGER"/>
+        <result property="schoolContrast" column="school_contrast" jdbcType="INTEGER"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="registrationTime" column="registration_time" jdbcType="TIMESTAMP"/>
+        <result property="accountStatus" column="account_status" jdbcType="INTEGER"/>
+        <result property="checkStatus" column="check_status" jdbcType="INTEGER"/>
+        <result property="checkTime" column="check_time" jdbcType="TIMESTAMP"/>
+        <result property="checkRemark" column="check_remark" jdbcType="VARCHAR"/>
+        <result property="companyLogo" column="company_logo" jdbcType="VARCHAR"/>
+        <result property="companyAddr" column="company_addr" jdbcType="VARCHAR"/>
+        <result property="companyLegalPerson" column="company_legal_person" jdbcType="VARCHAR"/>
+        <result property="businessLicenseNumber" column="business_license_number" jdbcType="VARCHAR"/>
+        <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+        <result property="companyDetail" column="company_detail" jdbcType="VARCHAR"/>
+        <result property="companyNature" column="company_nature" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="openid" column="openid" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="headImage" column="head_image" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column">
+       s.id, s.school_code, s.school_characteristic, s.enrolment_type, s.enrolment_tel,s.school_superiority, s.school_type, s.school_website, s.enrolment_website, s.enrolment_brochure, s.school_synopsis, s.school_website_click, s.enrolment_website_click, s.school_contrast, s.create_time
+    </sql>
+    <sql id="company_column">
+         e.id,e.company_name, e.contact_name, e.tel, e.email, e.registration_time, e.account_status,  e.check_status, e.check_time, e.check_remark, e.company_logo, e.company_addr, e.company_legal_person, e.business_license_number, e.business_license, e.company_detail, e.company_nature, e.province, e.city, e.openid,  e.nickname,e.head_image
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="SchoolExtendMap">
+        select
+          id, school_code, school_characteristic, enrolment_type, enrolment_tel, school_superiority, school_type, school_website, enrolment_website, enrolment_brochure, school_synopsis, school_website_click, enrolment_website_click, school_contrast, create_time
+        from school_extend
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="SchoolExtendMap">
+        select
+          id, school_code, school_characteristic, enrolment_type, enrolment_tel, school_superiority, school_type, school_website, enrolment_website, enrolment_brochure, school_synopsis, school_website_click, enrolment_website_click, school_contrast, create_time
+        from school_extend
+        limit #{startRow}, #{pageSize}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="SchoolExtendMap">
+        select
+        id, school_code, school_characteristic, enrolment_type, enrolment_tel, school_superiority, school_type, school_website, enrolment_website, enrolment_brochure, school_synopsis, school_website_click, enrolment_website_click, school_contrast, create_time
+        from school_extend
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="schoolCode != null and schoolCode != ''">
+                and school_code = #{schoolCode}
+            </if>
+            <if test="schoolCharacteristic != null and schoolCharacteristic != ''">
+                and school_characteristic = #{schoolCharacteristic}
+            </if>
+            <if test="enrolmentType != null and enrolmentType != ''">
+                and enrolment_type = #{enrolmentType}
+            </if>
+            <if test="enrolmentTel != null and enrolmentTel != ''">
+                and enrolment_tel = #{enrolmentTel}
+            </if>
+            <if test="schoolSuperiority != null and schoolSuperiority != ''">
+                and school_superiority = #{schoolSuperiority}
+            </if>
+            <if test="schoolType != null">
+                and school_type = #{schoolType}
+            </if>
+            <if test="schoolWebsite != null and schoolWebsite != ''">
+                and school_website = #{schoolWebsite}
+            </if>
+            <if test="enrolmentWebsite != null and enrolmentWebsite != ''">
+                and enrolment_website = #{enrolmentWebsite}
+            </if>
+            <if test="enrolmentBrochure != null and enrolmentBrochure != ''">
+                and enrolment_brochure = #{enrolmentBrochure}
+            </if>
+            <if test="schoolSynopsis != null and schoolSynopsis != ''">
+                and school_synopsis = #{schoolSynopsis}
+            </if>
+            <if test="schoolWebsiteClick != null">
+                and school_website_click = #{schoolWebsiteClick}
+            </if>
+            <if test="enrolmentWebsiteClick != null">
+                and enrolment_website_click = #{enrolmentWebsiteClick}
+            </if>
+            <if test="schoolContrast != null">
+                and school_contrast = #{schoolContrast}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into school_extend(id,school_code, school_characteristic, enrolment_type, enrolment_tel, school_superiority, school_type, school_website, enrolment_website, enrolment_brochure, school_synopsis, school_website_click, enrolment_website_click, school_contrast, create_time)
+        values (#{id},#{schoolCode}, #{schoolCharacteristic}, #{enrolmentType}, #{enrolmentTel}, #{schoolSuperiority}, #{schoolType}, #{schoolWebsite}, #{enrolmentWebsite}, #{enrolmentBrochure}, #{schoolSynopsis}, #{schoolWebsiteClick}, #{enrolmentWebsiteClick}, #{schoolContrast}, #{createTime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update school_extend
+        <set>
+            <if test="schoolCode != null and schoolCode != ''">
+                school_code = #{schoolCode},
+            </if>
+            <if test="schoolCharacteristic != null and schoolCharacteristic != ''">
+                school_characteristic = #{schoolCharacteristic},
+            </if>
+            <if test="enrolmentType != null and enrolmentType != ''">
+                enrolment_type = #{enrolmentType},
+            </if>
+            <if test="enrolmentTel != null and enrolmentTel != ''">
+                enrolment_tel = #{enrolmentTel},
+            </if>
+            <if test="schoolSuperiority != null and schoolSuperiority != ''">
+                school_superiority = #{schoolSuperiority},
+            </if>
+            <if test="schoolType != null">
+                school_type = #{schoolType},
+            </if>
+            <if test="schoolWebsite != null and schoolWebsite != ''">
+                school_website = #{schoolWebsite},
+            </if>
+            <if test="enrolmentWebsite != null and enrolmentWebsite != ''">
+                enrolment_website = #{enrolmentWebsite},
+            </if>
+            <if test="enrolmentBrochure != null and enrolmentBrochure != ''">
+                enrolment_brochure = #{enrolmentBrochure},
+            </if>
+            <if test="schoolSynopsis != null and schoolSynopsis != ''">
+                school_synopsis = #{schoolSynopsis},
+            </if>
+            <if test="schoolWebsiteClick != null">
+                school_website_click = #{schoolWebsiteClick},
+            </if>
+            <if test="enrolmentWebsiteClick != null">
+                enrolment_website_click = #{enrolmentWebsiteClick},
+            </if>
+            <if test="schoolContrast != null">
+                school_contrast = #{schoolContrast},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from school_extend where id = #{id}
+    </delete>
+
+    <select id="selectSchoolForScore" resultType="com.yidaoyun.user.bean.vo.FindSchoolExtendVO" >
+        SELECT e.id,s.school_code schoolCode,e.company_name companyName,t1.lowest_score lowestScore,t2.estimate_score estimateScore,
+        e.city,e.province,s.school_type schoolType,s.school_website_click schoolWebsiteClick,
+        s.enrolment_website_click enrolmentWebsiteClick,s.school_contrast schoolContrast,e.company_logo companyLogo,s.school_characteristic schoolCharacteristic,
+        s.school_superiority schoolSuperiority,s.enrolment_brochure enrolmentBrochure,s.school_website schoolWebsite,s.enrolment_tel enrolmentTel,s.school_synopsis schoolSynopsis
+        FROM school_extend s left join enter_company e on e.id = s.id
+        left join (select k1.`year`,k1.school_code,k1.lowest_score from (select c1.`year`,c1.school_code,c1.lowest_score from school_score c1 where c1.`year` = #{info.year}-1   order by c1.school_code, c1.lowest_score asc ) k1 group by k1.school_code) t1 on t1.school_code = s.school_code
+        left join (select k2.`year`,k2.school_code,k2.estimate_score from (select c2.`year`,c2.school_code,c2.estimate_score from school_score c2 where c2.`year` = #{info.year}  order by c2.school_code,c2.estimate_score asc ) k2 group by k2.school_code) t2 on t2.school_code = s.school_code
+        where 1 = 1
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+        <if test="info.enrolmentType != null">
+            and s.enrolment_type like concat ('%', #{info.enrolmentType} ,'%')
+        </if>
+        <if test="info.schoolType != null">
+            and s.school_type = #{info.schoolType}
+        </if>
+        <if test="info.city != null">
+            and e.city like concat ('%', #{info.city} ,'%')
+        </if>
+        <if test="info.companyName != null">
+            and e.company_name like concat ('%', #{info.companyName} ,'%')
+        </if>
+        <if test="info.schoolSuperiority != null">
+            and s.school_superiority like concat ('%', #{info.schoolSuperiority} ,'%')
+        </if>
+        <if test="info.schoolCharacteristic != null">
+            and s.school_characteristic like concat ('%', #{info.schoolCharacteristic} ,'%')
+        </if>
+        <if test="info.schoolSuperiorityOrName != null">
+            and s.school_superiority like concat ('%', #{info.schoolSuperiorityOrName} ,'%') or e.company_name like concat ('%', #{info.schoolSuperiorityOrName} ,'%')
+        </if>
+        order by e.id
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+    <select id="selectSchoolForScoreCount" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM school_extend s left join enter_company e on e.id = s.id
+        left join (select k1.`year`,k1.school_code,k1.lowest_score from (select c1.`year`,c1.school_code,c1.lowest_score from school_score c1 where c1.`year` = #{info.year}-1   order by c1.school_code, c1.lowest_score asc ) k1 group by k1.school_code) t1 on t1.school_code = s.school_code
+        left join (select k2.`year`,k2.school_code,k2.estimate_score from (select c2.`year`,c2.school_code,c2.estimate_score from school_score c2 where c2.`year` = #{info.year}  order by c2.school_code,c2.estimate_score asc ) k2 group by k2.school_code) t2 on t2.school_code = s.school_code
+        where 1 = 1
+        <if test="info.lowestScoreStart !=null and info.lowestScoreEnd != null">
+            and t1.lowest_score &gt;= #{info.lowestScoreStart} and t1.lowest_score &lt;= #{info.lowestScoreEnd}
+        </if>
+        <if test="info.estimateScoreStart !=null and info.estimateScoreEnd != null">
+            and t2.estimate_score &gt;= #{info.estimateScoreStart} and t2.estimate_score &lt;= #{info.estimateScoreEnd}
+        </if>
+        <if test="info.enrolmentType != null">
+            and s.enrolment_type like concat ('%', #{info.enrolmentType} ,'%')
+        </if>
+        <if test="info.schoolType != null">
+            and s.school_type = #{info.schoolType}
+        </if>
+        <if test="info.city != null">
+            and e.city like concat ('%', #{info.city} ,'%')
+        </if>
+        <if test="info.companyName != null">
+            and e.company_name like concat ('%', #{info.companyName} ,'%')
+        </if>
+        <if test="info.schoolSuperiority != null">
+            and s.school_superiority like concat ('%', #{info.schoolSuperiority} ,'%')
+        </if>
+        <if test="info.schoolCharacteristic != null">
+            and s.school_characteristic like concat ('%', #{info.schoolCharacteristic} ,'%')
+        </if>
+        <if test="info.schoolSuperiorityOrName != null">
+            and s.school_superiority like concat ('%', #{info.schoolSuperiorityOrName} ,'%') or e.company_name like concat ('%', #{info.schoolSuperiorityOrName} ,'%')
+        </if>
+    </select>
+    <select id="selectSchoolDetail" resultMap="SchoolDeatilMap">
+        select <include refid="base_column"/>,<include refid="company_column"/>
+        from school_extend s left join enter_company e on e.id = s.id where e.id = #{id}
+    </select>
+    <select id="selectSchoolFocusRanking" resultType="com.yidaoyun.user.bean.vo.SchoolFocusRankingVO">
+        select s.id,s.school_code schoolCode,e.company_name companyName,e.city,e.province,e.company_logo companyLogo from school_extend s
+        left join enter_company e on s.id = e.id
+        left join
+        (select m.enter_company_id,count(1) total from my_attention m  where m.enter_company_id is not null group by m.enter_company_id) t1
+        on s.id = t1.enter_company_id
+        order by t1.total desc
+        limit 6
+    </select>
+    <select id="selectSchoolCityList" resultType="com.yidaoyun.user.bean.vo.SchoolCityVO">
+        select 	DISTINCT(e.city) from school_extend s left join enter_company e on s.id = e.id
+        where 1 = 1 and e.city is not null
+        <if test="city != null and city != ''">
+            and e.city like concat('%',#{city},'%')
+        </if>
+
+    </select>
+    <select id="selectSchoolExtendList" resultMap="SchoolDeatilMap">
+        select <include refid="company_column"/>
+        from school_extend s left join enter_company e on s.id = e.id
+        where 1=1
+        <if test="info.accountStatus != null">
+            and e.account_status = #{info.accountStatus}
+        </if>
+        <if test="info.checkStatus != null">
+            and e.check_status = #{info.checkStatus}
+        </if>
+        <if test="info.companyNameOrTel != null">
+            and (e.tel like concat('%',#{info.companyNameOrTel},'%')
+            or e.company_name like concat('%',#{info.companyNameOrTel},'%'))
+        </if>
+        limit #{info.startRow},#{info.pageSize}
+    </select>
+    <select id="selectSchoolExtendCount" resultType="java.lang.Long">
+        select count(1)
+        from school_extend s left join enter_company e on s.id = e.id
+        where 1=1
+        <if test="info.accountStatus != null">
+            and e.account_status = #{info.accountStatus}
+        </if>
+        <if test="info.checkStatus != null">
+            and e.check_status = #{info.checkStatus}
+        </if>
+        <if test="info.companyNameOrTel != null">
+            and( e.tel like concat('%',#{info.companyNameOrTel},'%')
+            or e.company_name like concat('%',#{info.companyNameOrTel},'%'))
+        </if>
+    </select>
+    <select id="selectBySchoolCode" resultMap="SchoolExtendMap">
+        select <include refid="base_column"></include>
+        from school_extend s where s.school_code = #{schoolCode}
+    </select>
+
+</mapper>
